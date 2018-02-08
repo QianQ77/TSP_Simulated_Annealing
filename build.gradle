@@ -1,0 +1,35 @@
+version '1.0'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task fatJar(type: Jar){
+    manifest{
+        attributes 'Implementation-Title': 'TSP',
+                'Main-Class': 'Main'
+    }
+    baseName = 'TSP'
+    from{
+        configurations.compile.collect{it.isDirectory() ? it : zipTree(it)}
+    }
+    with jar
+}
+
+task fatJarReadTxt(type: Jar){
+    manifest{
+        attributes 'Implementation-Title': 'TSP_ReadTxt',
+                'Main-Class': 'MainReadTxt'
+    }
+    baseName = 'TSP_ReadTxt'
+    from{
+        configurations.compile.collect{it.isDirectory() ? it : zipTree(it)}
+    }
+    with jar
+}
